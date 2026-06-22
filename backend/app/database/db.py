@@ -1,13 +1,40 @@
+"""
+SmartERP — Database Engine & Session Factory
+Provides the SQLAlchemy 2.0 engine, SessionLocal, and the declarative Base.
+"""
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import sessionmaker, DeclarativeBase
+
 from app.core.config import settings
 
-engine = create_engine(settings.DATABASE_URL)
 
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine
+# -----------------------------------------------------------------
+# Engine
+# connect_args required for NeonDB / pgbouncer compatibility
+# -----------------------------------------------------------------
+engine = create_engine(
+    settings.DATABASE_URL,
+    pool_pre_ping=True,       # Drops stale connections before use
+    pool_size=5,              # Number of persistent connections
+    max_overflow=10,          # Extra connections allowed above pool_size
+    echo=settings.DEBUG,      # Log SQL when DEBUG=True
 )
 
-Base = declarative_base()
+# -----------------------------------------------------------------
+# Session Factory
+# -----------------------------------------------------------------
+SessionLocal = sessionmaker(
+    bind=engine,
+    autocommit=False,
+    autoflush=False,
+    expire_on_commit=False,   # Prevents lazy-load errors after commit
+)
+
+
+# -----------------------------------------------------------------
+# Declarative Base
+# All SQLAlchemy models inherit from this class.
+# -----------------------------------------------------------------
+class Base(DeclarativeBase):
+    pass
