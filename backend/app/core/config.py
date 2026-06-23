@@ -30,6 +30,13 @@ class Settings(BaseSettings):
         return v
 
     # -----------------------------------------------------------------
+    # JWT / Authentication
+    # -----------------------------------------------------------------
+    SECRET_KEY: str = "CHANGE-ME-IN-PRODUCTION-USE-openssl-rand-hex-32"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+
+    # -----------------------------------------------------------------
     # Pydantic Settings Config
     # -----------------------------------------------------------------
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}

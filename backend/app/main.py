@@ -1,7 +1,7 @@
 """
 SmartERP — FastAPI Application Entry Point
 Day 2: Minimal API with root, health, and database health endpoints.
-No authentication or business routes are included at this stage.
+Day 3: Authentication module (register, login, JWT-protected /me).
 """
 
 from fastapi import FastAPI, Depends, HTTPException
@@ -10,6 +10,7 @@ from sqlalchemy import text
 
 from app.core.config import settings
 from app.database.dependencies import get_db
+from app.routes.auth import router as auth_router
 
 # ------------------------------------------------------------------
 # Application Instance
@@ -19,11 +20,16 @@ app = FastAPI(
     version=settings.APP_VERSION,
     description=(
         "SmartERP — Billing, Inventory & Accounting Management System. "
-        "Day 1 & Day 2 foundation: database schema and API scaffold."
+        "Day 3: JWT authentication (register · login · protected routes)."
     ),
     docs_url="/docs",
     redoc_url="/redoc",
 )
+
+# ------------------------------------------------------------------
+# Route Registration
+# ------------------------------------------------------------------
+app.include_router(auth_router)
 
 
 # ------------------------------------------------------------------
