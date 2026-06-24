@@ -2,15 +2,18 @@
 SmartERP — FastAPI Application Entry Point
 Day 2: Minimal API with root, health, and database health endpoints.
 Day 3: Authentication module (register, login, JWT-protected /me).
+Day 4: Company Management module (CRUD + ownership scoping).
 """
 
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 
 from app.core.config import settings
 from app.database.dependencies import get_db
 from app.routes.auth import router as auth_router
+from app.routes.company import router as company_router
 
 # ------------------------------------------------------------------
 # Application Instance
@@ -20,16 +23,28 @@ app = FastAPI(
     version=settings.APP_VERSION,
     description=(
         "SmartERP — Billing, Inventory & Accounting Management System. "
-        "Day 3: JWT authentication (register · login · protected routes)."
+        "Day 4: Company Management (CRUD · ownership scoping · soft delete)."
     ),
     docs_url="/docs",
     redoc_url="/redoc",
 )
 
 # ------------------------------------------------------------------
+# CORS Middleware — Allow Next.js frontend
+# ------------------------------------------------------------------
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# ------------------------------------------------------------------
 # Route Registration
 # ------------------------------------------------------------------
 app.include_router(auth_router)
+app.include_router(company_router)
 
 
 # ------------------------------------------------------------------
