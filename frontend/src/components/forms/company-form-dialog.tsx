@@ -37,7 +37,19 @@ const companySchema = z.object({
     .max(20, "Contact number must be 20 characters or less"),
   state: z
     .string()
-    .max(100, "State must be 100 characters or less"),
+    .max(100, "State must be 100 characters or less")
+    .optional()
+    .or(z.literal("")),
+  gst_number: z
+    .string()
+    .max(15, "GST number must be 15 characters or less")
+    .optional()
+    .or(z.literal("")),
+  financial_year: z
+    .string()
+    .max(9, "Financial year must be 9 characters or less")
+    .optional()
+    .or(z.literal("")),
 });
 
 type CompanyFormValues = z.infer<typeof companySchema>;
@@ -76,6 +88,8 @@ export function CompanyFormDialog({
       address: "",
       contact_number: "",
       state: "",
+      gst_number: "",
+      financial_year: "",
     },
   });
 
@@ -88,6 +102,8 @@ export function CompanyFormDialog({
           address: company.address || "",
           contact_number: company.contact_number || "",
           state: company.state || "",
+          gst_number: company.gst_number || "",
+          financial_year: company.financial_year || "",
         });
       } else {
         reset({
@@ -95,6 +111,8 @@ export function CompanyFormDialog({
           address: "",
           contact_number: "",
           state: "",
+          gst_number: "",
+          financial_year: "",
         });
       }
     }
@@ -109,6 +127,8 @@ export function CompanyFormDialog({
       address: data.address || null,
       contact_number: data.contact_number || null,
       state: data.state || null,
+      gst_number: data.gst_number || null,
+      financial_year: data.financial_year || null,
     };
 
     try {
@@ -218,6 +238,40 @@ export function CompanyFormDialog({
             {errors.state && (
               <p className="text-xs text-destructive">
                 {errors.state.message}
+              </p>
+            )}
+          </div>
+
+          {/* GST Number */}
+          <div className="space-y-2">
+            <Label htmlFor="company-gst">GST Number</Label>
+            <Input
+              id="company-gst"
+              placeholder="e.g. 24AAACC1206D1Z1"
+              disabled={isSubmitting}
+              aria-invalid={!!errors.gst_number}
+              {...register("gst_number")}
+            />
+            {errors.gst_number && (
+              <p className="text-xs text-destructive">
+                {errors.gst_number.message}
+              </p>
+            )}
+          </div>
+
+          {/* Financial Year */}
+          <div className="space-y-2">
+            <Label htmlFor="company-fy">Financial Year</Label>
+            <Input
+              id="company-fy"
+              placeholder="e.g. 2023-2024"
+              disabled={isSubmitting}
+              aria-invalid={!!errors.financial_year}
+              {...register("financial_year")}
+            />
+            {errors.financial_year && (
+              <p className="text-xs text-destructive">
+                {errors.financial_year.message}
               </p>
             )}
           </div>

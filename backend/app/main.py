@@ -14,6 +14,7 @@ from app.core.config import settings
 from app.database.dependencies import get_db
 from app.routes.auth import router as auth_router
 from app.routes.company import router as company_router
+from app.routes.dashboard import router as dashboard_router
 
 # ------------------------------------------------------------------
 # Application Instance
@@ -45,7 +46,7 @@ app.add_middleware(
 # ------------------------------------------------------------------
 app.include_router(auth_router)
 app.include_router(company_router)
-
+app.include_router(dashboard_router)
 
 # ------------------------------------------------------------------
 # Root Endpoint
@@ -97,3 +98,8 @@ def db_health(db: Session = Depends(get_db)):
             status_code=503,
             detail=f"Database unreachable: {str(exc)}",
         )
+
+# ------------------------------------------------------------------
+# Dashboard Route
+# ------------------------------------------------------------------
+

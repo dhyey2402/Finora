@@ -96,6 +96,20 @@ export function CompanyDetailsDialog({
                   {company.state || "Not provided"}
                 </p>
               </div>
+
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-muted-foreground">GST Number</p>
+                <p className="text-sm text-foreground">
+                  {company.gst_number || "Not provided"}
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-muted-foreground">Financial Year</p>
+                <p className="text-sm text-foreground">
+                  {company.financial_year || "Not provided"}
+                </p>
+              </div>
             </CardContent>
           </Card>
 

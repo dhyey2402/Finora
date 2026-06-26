@@ -1,7 +1,5 @@
 """
 SmartERP — Company Model
-Represents an ERP tenant company. Each user can manage multiple companies.
-All transactional data is scoped under a company for multi-tenancy.
 """
 
 from sqlalchemy import String, Boolean, ForeignKey
@@ -33,6 +31,8 @@ class Company(Base, TimestampMixin):
     address: Mapped[str | None] = mapped_column(String(500))
     contact_number: Mapped[str | None] = mapped_column(String(20))
     state: Mapped[str | None] = mapped_column(String(100))
+    gst_number: Mapped[str | None] = mapped_column(String(15))
+    financial_year: Mapped[str | None] = mapped_column(String(9))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
     # ------------------------------------------------------------------

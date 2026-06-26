@@ -40,6 +40,18 @@ class CompanyCreate(BaseModel):
         examples=["Gujarat"],
         description="State of registration (for GST / tax purposes)",
     )
+    gst_number: Optional[str] = Field(
+        None,
+        max_length=15,
+        examples=["24AAACC1206D1Z1"],
+        description="GST Registration Number",
+    )
+    financial_year: Optional[str] = Field(
+        None,
+        max_length=9,
+        examples=["2023-2024"],
+        description="Current financial year for the company",
+    )
 
 
 class CompanyUpdate(BaseModel):
@@ -68,6 +80,16 @@ class CompanyUpdate(BaseModel):
         max_length=100,
         examples=["Gujarat"],
     )
+    gst_number: Optional[str] = Field(
+        None,
+        max_length=15,
+        examples=["24AAACC1206D1Z1"],
+    )
+    financial_year: Optional[str] = Field(
+        None,
+        max_length=9,
+        examples=["2023-2024"],
+    )
 
 
 # ------------------------------------------------------------------
@@ -81,6 +103,8 @@ class CompanyResponse(BaseModel):
     address: Optional[str] = None
     contact_number: Optional[str] = None
     state: Optional[str] = None
+    gst_number: Optional[str] = None
+    financial_year: Optional[str] = None
     is_active: bool
     user_id: int
     created_at: datetime
