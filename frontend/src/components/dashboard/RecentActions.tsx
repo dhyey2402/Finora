@@ -1,37 +1,37 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Company } from "@/types/company";
+import type { AuditLog } from "@/types/audit-log";
 
-interface RecentCompaniesProps {
-  companies: Company[];
+interface RecentActionsProps {
+  actions: AuditLog[];
 }
 
-export function RecentCompanies({ companies }: RecentCompaniesProps) {
+export function RecentActions({ actions }: RecentActionsProps) {
   return (
     <Card className="rounded-xl border-border/50 hover:shadow-md transition-shadow duration-200">
       <CardHeader>
-        <CardTitle>Recent Companies</CardTitle>
-        <CardDescription>Latest companies added to the system</CardDescription>
+        <CardTitle>Recent Actions</CardTitle>
+        <CardDescription>Latest actions performed in the system</CardDescription>
       </CardHeader>
       <CardContent>
-        {companies.length === 0 ? (
+        {actions.length === 0 ? (
           <div className="text-center py-6 text-muted-foreground">
-            No companies found.
+            No recent actions found.
           </div>
         ) : (
           <div className="space-y-4">
-            {companies.map((company) => (
+            {actions.map((action) => (
               <div
-                key={company.id}
+                key={action.id}
                 className="flex items-center justify-between rounded-lg border p-4"
               >
                 <div className="flex flex-col space-y-1">
-                  <span className="font-medium">{company.name}</span>
+                  <span className="font-medium capitalize">{action.action.toLowerCase()} {action.table_name}</span>
                   <span className="text-sm text-muted-foreground">
-                    {company.state || "State not provided"}
+                    Record ID: {action.record_id || "N/A"}
                   </span>
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  {new Date(company.created_at).toLocaleDateString()}
+                  {new Date(action.timestamp).toLocaleDateString()} {new Date(action.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
             ))}

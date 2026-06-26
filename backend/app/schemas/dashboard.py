@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from app.schemas.company import CompanyResponse
+from app.schemas.audit_log import AuditLogResponse
 
 class DashboardSummaryResponse(BaseModel):
     #Dashboard summary response.
@@ -11,8 +11,8 @@ class DashboardSummaryResponse(BaseModel):
     suppliers_count: int
     #Inventory Count
     inventory_count: int
-    #Recent Companies
-    recent_companies: list[CompanyResponse]
+    #Recent Actions
+    recent_actions: list[AuditLogResponse]
     #Income
     income: float
     #Expenses

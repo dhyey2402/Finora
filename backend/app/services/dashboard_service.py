@@ -7,6 +7,8 @@ from app.models.supplier import Supplier
 from app.models.stock_item import StockItem
 from app.models.stock_group import StockGroup
 
+from app.models.audit_log import AuditLog
+
 def get_dashboard_summary(db: Session, user_id: int):
 
     # Get all company IDs owned by this user
@@ -33,15 +35,14 @@ def get_dashboard_summary(db: Session, user_id: int):
         .where(StockGroup.company_id.in_(company_ids))
     ).scalar()
 
-    # Recent Companies
+    # Recent Actions
     stmt = (
-        select(Company)
-        .where(Company.user_id == user_id)
-        .where(Company.is_active.is_(True))
-        .order_by(Company.created_at.desc())
+        select(AuditLog)
+        .where(AuditLog.user_id == user_id)
+        .order_by(AuditLog.timestamp.desc())
         .limit(5)
     )
-    recent_companies = db.execute(stmt).scalars().all()
+    recent_actions = db.execute(stmt).scalars().all()
 
     # Income
     income = 0
@@ -58,7 +59,7 @@ def get_dashboard_summary(db: Session, user_id: int):
             "customers_count": customer_count,
             "suppliers_count": supplier_count,
             "inventory_count": inventory_count,
-            "recent_companies": recent_companies,
+            "recent_actions": recent_actions,
             "income": float(income),
             "expenses": float(expenses),
             "net_profit": float(net_profit)

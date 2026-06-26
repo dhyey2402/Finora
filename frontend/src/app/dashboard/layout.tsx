@@ -24,6 +24,8 @@ import {
   MenuIcon,
   XIcon,
   ChevronLeftIcon,
+  UsersIcon,
+  TruckIcon,
 } from "lucide-react";
 
 // ------------------------------------------------------------------
@@ -39,6 +41,16 @@ const sidebarItems = [
     label: "Companies",
     href: "/dashboard/companies",
     icon: BuildingIcon,
+  },
+  {
+    label: "Customers",
+    href: "/dashboard/customers",
+    icon: UsersIcon,
+  },
+  {
+    label: "Suppliers",
+    href: "/dashboard/suppliers",
+    icon: TruckIcon,
   },
   {
     label: "Ledgers",

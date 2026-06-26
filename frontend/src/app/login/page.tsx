@@ -69,7 +69,7 @@ export default function LoginPage() {
         description: "Redirecting to dashboard...",
       });
 
-      router.push("/dashboard/companies");
+      router.push("/dashboard");
     } catch (error: unknown) {
       const axiosError = error as { response?: { data?: { detail?: string } } };
       const message =

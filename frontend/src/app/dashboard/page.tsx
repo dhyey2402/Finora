@@ -4,7 +4,7 @@ import { useDashboard } from "@/services/dashboard";
 import { Building2, Package, Truck, Users } from "lucide-react";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { FinancialCard } from "@/components/dashboard/FinancialCard";
-import { RecentCompanies } from "@/components/dashboard/RecentCompanies";
+import { RecentActions } from "@/components/dashboard/RecentActions";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { DashboardSkeleton } from "@/components/dashboard/DashboardSkeleton";
 import { DashboardError } from "@/components/dashboard/DashboardError";
@@ -64,9 +64,9 @@ export default function DashboardPage() {
         <FinancialCard title="Net Profit" amount={data.net_profit} type="profit" />
       </div>
 
-      {/* Recent Companies */}
+      {/* Recent Actions */}
       <div className="w-full">
-        <RecentCompanies companies={data.recent_companies} />
+        <RecentActions actions={data.recent_actions} />
       </div>
     </div>
   );

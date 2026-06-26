@@ -16,7 +16,7 @@ export default function Home() {
         : null;
 
     if (token) {
-      router.replace("/dashboard/companies");
+      router.replace("/dashboard");
     } else {
       router.replace("/login");
     }

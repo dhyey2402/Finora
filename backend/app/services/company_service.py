@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 
 from app.models.company import Company
 from app.schemas.company import CompanyCreate, CompanyUpdate
+from app.services.audit_service import log_action
 
 
 # ------------------------------------------------------------------
@@ -45,6 +46,18 @@ def create_company(db: Session, payload: CompanyCreate, user_id: int) -> Company
     db.add(company)
     db.commit()
     db.refresh(company)
+    
+    log_action(
+        db=db,
+        user_id=user_id,
+        action="CREATE",
+        table_name="companies",
+        record_id=company.id,
+        company_id=company.id,
+        details=payload.model_dump()
+    )
+    db.commit()
+
     return company
 
 
@@ -144,6 +157,18 @@ def update_company(
 
     db.commit()
     db.refresh(company)
+    
+    log_action(
+        db=db,
+        user_id=user_id,
+        action="UPDATE",
+        table_name="companies",
+        record_id=company.id,
+        company_id=company.id,
+        details=update_data
+    )
+    db.commit()
+
     return company
 
 
@@ -177,4 +202,15 @@ def deactivate_company(
     company.is_active = False
     db.commit()
     db.refresh(company)
+    
+    log_action(
+        db=db,
+        user_id=user_id,
+        action="DEACTIVATE",
+        table_name="companies",
+        record_id=company.id,
+        company_id=company.id
+    )
+    db.commit()
+
     return company
