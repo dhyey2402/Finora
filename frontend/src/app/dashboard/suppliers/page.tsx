@@ -51,7 +51,7 @@ export default function SuppliersPage() {
 
   // Fetch suppliers for selected company
   const {
-    data: suppliers = [],
+    data: suppliersData,
     isLoading: isLoadingSuppliers,
     isError,
     refetch,
@@ -60,6 +60,8 @@ export default function SuppliersPage() {
     queryFn: () => getSuppliers(selectedCompanyId!),
     enabled: !!selectedCompanyId,
   });
+
+  const suppliers = suppliersData?.items || [];
 
   const isLoading = isLoadingCompanies || isLoadingSuppliers;
 

@@ -1,9 +1,15 @@
 import api from "@/lib/api";
 import type { Supplier, SupplierCreate, SupplierUpdate } from "@/types/supplier";
+import type { PaginatedResponse } from "@/types/common";
 
-export const getSuppliers = async (companyId: number): Promise<Supplier[]> => {
-  const { data } = await api.get<Supplier[]>(`/suppliers`, {
-    params: { company_id: companyId },
+export const getSuppliers = async (
+  companyId: number,
+  search?: string,
+  limit: number = 10,
+  offset: number = 0
+): Promise<PaginatedResponse<Supplier>> => {
+  const { data } = await api.get<PaginatedResponse<Supplier>>(`/suppliers`, {
+    params: { company_id: companyId, search, limit, offset },
   });
   return data;
 };

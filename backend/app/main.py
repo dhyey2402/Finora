@@ -17,7 +17,12 @@ from app.routes.company import router as company_router
 from app.routes.dashboard import router as dashboard_router
 from app.routes.customer import router as customer_router
 from app.routes.supplier import router as supplier_router
-
+from app.routes.unit import router as unit_router
+from app.routes.stock_group import router as stock_group_router
+from app.routes.stock_item import router as stock_item_router
+from app.routes.inventory_transaction import router as inventory_transaction_router
+from app.routes.group import router as group_router
+from app.routes.ledger import router as ledger_router
 # ------------------------------------------------------------------
 # Application Instance
 # ------------------------------------------------------------------
@@ -51,7 +56,12 @@ app.include_router(company_router)
 app.include_router(dashboard_router)
 app.include_router(customer_router)
 app.include_router(supplier_router)
-
+app.include_router(unit_router)
+app.include_router(stock_group_router)
+app.include_router(stock_item_router)
+app.include_router(inventory_transaction_router)
+app.include_router(group_router)
+app.include_router(ledger_router)
 # ------------------------------------------------------------------
 # Root Endpoint
 # ------------------------------------------------------------------

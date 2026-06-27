@@ -37,6 +37,7 @@ def register(payload: UserRegister, db: Session = Depends(get_db)):
     - **password**: Min 8 characters
     """
     try:
+        # Attempt to register the user; this may fail if the email is not unique.
         user = register_user(db, payload)
     except ValueError as exc:
         raise HTTPException(
@@ -81,6 +82,7 @@ def login(
             detail="Inactive user account",
         )
 
+    # Generate a JWT token after successful authentication for subsequent requests.
     access_token = create_access_token(data={"sub": user.email})
     return Token(access_token=access_token, token_type="bearer")
 

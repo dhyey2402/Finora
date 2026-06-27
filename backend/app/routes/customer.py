@@ -11,6 +11,7 @@ from app.database.dependencies import get_db
 from app.core.auth import get_current_user
 from app.models.user import User
 from app.schemas.customer import CustomerCreate, CustomerUpdate, CustomerResponse
+from app.schemas.common import PaginatedResponse
 from app.services.customer_service import (
     create_customer,
     get_customers,
@@ -41,16 +42,25 @@ def create_new_customer(
 
 @router.get(
     "",
-    response_model=List[CustomerResponse],
+    response_model=PaginatedResponse[CustomerResponse],
     summary="List customers for a company",
 )
 def list_customers(
     company_id: int,
+    search: str | None = None,
+    limit: int = 100,
+    offset: int = 0,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """List all customers scoped to a specific company."""
-    return get_customers(db, company_id)
+    """List all customers scoped to a specific company with pagination."""
+    items, total = get_customers(db, company_id, search, limit, offset)
+    return PaginatedResponse(
+        items=items,
+        total=total,
+        limit=limit,
+        offset=offset
+    )
 
 
 @router.get(

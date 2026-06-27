@@ -15,6 +15,7 @@ def get_db() -> Generator[Session, None, None]:
     The session is automatically closed after the request completes,
     even if an exception occurs.
     """
+    # Create a new database session for each request to ensure isolated transactions.
     db = SessionLocal()
     try:
         yield db

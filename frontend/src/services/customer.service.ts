@@ -1,9 +1,15 @@
 import api from "@/lib/api";
 import type { Customer, CustomerCreate, CustomerUpdate } from "@/types/customer";
+import type { PaginatedResponse } from "@/types/common";
 
-export const getCustomers = async (companyId: number): Promise<Customer[]> => {
-  const { data } = await api.get<Customer[]>(`/customers`, {
-    params: { company_id: companyId },
+export const getCustomers = async (
+  companyId: number,
+  search?: string,
+  limit: number = 10,
+  offset: number = 0
+): Promise<PaginatedResponse<Customer>> => {
+  const { data } = await api.get<PaginatedResponse<Customer>>(`/customers`, {
+    params: { company_id: companyId, search, limit, offset },
   });
   return data;
 };

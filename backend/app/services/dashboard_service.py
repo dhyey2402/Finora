@@ -10,24 +10,25 @@ from app.models.stock_group import StockGroup
 from app.models.audit_log import AuditLog
 
 def get_dashboard_summary(db: Session, user_id: int):
+    """Retrieve key metrics and recent activities for the user's dashboard."""
 
-    # Get all company IDs owned by this user
+    # Retrieve all active companies owned by the authenticated user to scope the dashboard data.
     company_ids = db.execute(
         select(Company.id).where(Company.user_id == user_id, Company.is_active.is_(True))
     ).scalars().all()
     
-    # Company Count
+    # Count only active companies that belong to the user.
     company_count = db.execute(
         select(func.count()).select_from(Company).where(Company.user_id == user_id, Company.is_active.is_(True))
     ).scalar_one()
 
-    # Customer Count
+    # Aggregate the total number of customers across all active companies.
     customer_count = db.execute(select(func.count()).select_from(Customer).where(Customer.company_id.in_(company_ids))).scalar_one()
 
-    # Supplier Count
+    # Aggregate the total number of suppliers across all active companies.
     supplier_count = db.execute(select(func.count()).select_from(Supplier).where(Supplier.company_id.in_(company_ids))).scalar_one()
 
-    # Inventory Count
+    # Calculate total inventory items linked to stock groups within the user's companies.
     inventory_count = db.execute(
         select(func.count())
         .select_from(StockItem)
@@ -35,7 +36,7 @@ def get_dashboard_summary(db: Session, user_id: int):
         .where(StockGroup.company_id.in_(company_ids))
     ).scalar()
 
-    # Recent Actions
+    # Fetch the five most recent audit log entries to display user activity.
     stmt = (
         select(AuditLog)
         .where(AuditLog.user_id == user_id)
@@ -44,15 +45,13 @@ def get_dashboard_summary(db: Session, user_id: int):
     )
     recent_actions = db.execute(stmt).scalars().all()
 
-    # Income
+    # Financial metrics are placeholders pending full ledger implementation.
     income = 0
-    # Expenses
     expenses = 0    
 
-    # Net Profit
-
+    # Calculate net profit based on total income and expenses.
     net_profit = income - expenses
-    # Return response
+
     return(
         {
             "companies_count": company_count,
@@ -64,5 +63,4 @@ def get_dashboard_summary(db: Session, user_id: int):
             "expenses": float(expenses),
             "net_profit": float(net_profit)
         }
-    )
-    
+    )

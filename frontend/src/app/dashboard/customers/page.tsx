@@ -51,7 +51,7 @@ export default function CustomersPage() {
 
   // Fetch customers for selected company
   const {
-    data: customers = [],
+    data: customersData,
     isLoading: isLoadingCustomers,
     isError,
     refetch,
@@ -60,6 +60,8 @@ export default function CustomersPage() {
     queryFn: () => getCustomers(selectedCompanyId!),
     enabled: !!selectedCompanyId,
   });
+
+  const customers = customersData?.items || [];
 
   const isLoading = isLoadingCompanies || isLoadingCustomers;
 

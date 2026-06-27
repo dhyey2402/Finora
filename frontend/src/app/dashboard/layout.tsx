@@ -56,13 +56,11 @@ const sidebarItems = [
     label: "Ledgers",
     href: "/dashboard/ledgers",
     icon: BookOpenIcon,
-    disabled: true,
   },
   {
     label: "Groups",
     href: "/dashboard/groups",
     icon: FolderTreeIcon,
-    disabled: true,
   },
   {
     label: "Inventory",

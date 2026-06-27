@@ -5,7 +5,7 @@ Each ledger belongs to a Group and is scoped to a Company.
 """
 
 from decimal import Decimal
-from sqlalchemy import String, ForeignKey, Numeric
+from sqlalchemy import String, ForeignKey, Numeric, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database.db import Base
@@ -45,6 +45,7 @@ class Ledger(Base, TimestampMixin):
     current_balance: Mapped[Decimal] = mapped_column(
         Numeric(15, 2), default=0.00, nullable=False
     )
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
     # ------------------------------------------------------------------
     # Relationships

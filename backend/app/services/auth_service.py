@@ -41,6 +41,7 @@ def register_user(db: Session, payload: UserRegister) -> User:
     if existing:
         raise ValueError("A user with this email already exists")
 
+    # Hash the password before storing it in the database to ensure security.
     user = User(
         name=payload.name,
         email=payload.email,

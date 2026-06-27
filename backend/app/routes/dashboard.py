@@ -18,4 +18,5 @@ def dashboard_summary(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
+    """Compile and return the latest metrics and recent activities for the dashboard view."""
     return get_dashboard_summary(db, user_id=current_user.id)

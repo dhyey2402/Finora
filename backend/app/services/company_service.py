@@ -81,6 +81,7 @@ def get_company(db: Session, company_id: int, user_id: int) -> Optional[Company]
     -------
     Company | None
     """
+    # Ensure the company exists, is active, and belongs to the authenticated user.
     stmt = (
         select(Company)
         .where(Company.id == company_id)
@@ -151,6 +152,7 @@ def update_company(
     if not company:
         return None
 
+    # Extract fields for partial update and apply them to the company record.
     update_data = payload.model_dump(exclude_unset=True)
     for field, value in update_data.items():
         setattr(company, field, value)
@@ -199,6 +201,7 @@ def deactivate_company(
     if not company:
         return None
 
+    # Soft delete the company to preserve related historical records instead of permanently deleting it.
     company.is_active = False
     db.commit()
     db.refresh(company)

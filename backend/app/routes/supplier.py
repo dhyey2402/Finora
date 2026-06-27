@@ -11,6 +11,7 @@ from app.database.dependencies import get_db
 from app.core.auth import get_current_user
 from app.models.user import User
 from app.schemas.supplier import SupplierCreate, SupplierUpdate, SupplierResponse
+from app.schemas.common import PaginatedResponse
 from app.services.supplier_service import (
     create_supplier,
     get_suppliers,
@@ -39,16 +40,25 @@ def create_new_supplier(
 
 @router.get(
     "",
-    response_model=List[SupplierResponse],
+    response_model=PaginatedResponse[SupplierResponse],
     summary="List suppliers for a company",
 )
 def list_suppliers(
     company_id: int,
+    search: str | None = None,
+    limit: int = 100,
+    offset: int = 0,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """List all suppliers scoped to a specific company."""
-    return get_suppliers(db, company_id)
+    """List all suppliers scoped to a specific company with pagination."""
+    items, total = get_suppliers(db, company_id, search, limit, offset)
+    return PaginatedResponse(
+        items=items,
+        total=total,
+        limit=limit,
+        offset=offset
+    )
 
 
 @router.get(

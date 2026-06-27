@@ -10,7 +10,6 @@ import { Loader2Icon, UserIcon } from "lucide-react";
 
 import type { Customer, CustomerCreate, CustomerUpdate } from "@/types/customer";
 import { createCustomer, updateCustomer } from "@/services/customer.service";
-import { useCompanyStore } from "@/store/company-store"; // assuming this exists, wait I need to check how Company ID is obtained
 
 import {
   Dialog,
