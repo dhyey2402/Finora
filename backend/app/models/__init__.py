@@ -5,9 +5,12 @@ from app.models.customer import Customer
 from app.models.group import Group
 from app.models.inventory_transaction import InventoryTransaction
 from app.models.invoice import Invoice
+from app.models.invoice_item import InvoiceItem
 from app.models.ledger import Ledger
 from app.models.purchase import Purchase
+from app.models.purchase_item import PurchaseItem
 from app.models.sale import Sale
+from app.models.sale_item import SaleItem
 from app.models.stock_group import StockGroup
 from app.models.stock_item import StockItem
 from app.models.supplier import Supplier

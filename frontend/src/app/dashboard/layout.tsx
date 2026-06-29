@@ -66,19 +66,21 @@ const sidebarItems = [
     label: "Inventory",
     href: "/dashboard/inventory",
     icon: PackageIcon,
-    disabled: true,
   },
   {
     label: "Purchases",
     href: "/dashboard/purchases",
     icon: ShoppingCartIcon,
-    disabled: true,
   },
   {
     label: "Sales",
     href: "/dashboard/sales",
     icon: ReceiptIcon,
-    disabled: true,
+  },
+  {
+    label: "Invoices",
+    href: "/dashboard/invoices",
+    icon: ReceiptIcon,
   },
   {
     label: "Reports",

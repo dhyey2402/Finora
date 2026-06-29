@@ -23,6 +23,9 @@ from app.routes.stock_item import router as stock_item_router
 from app.routes.inventory_transaction import router as inventory_transaction_router
 from app.routes.group import router as group_router
 from app.routes.ledger import router as ledger_router
+from app.routes.purchase import router as purchase_router
+from app.routes.sale import router as sale_router
+from app.routes.invoice import router as invoice_router
 # ------------------------------------------------------------------
 # Application Instance
 # ------------------------------------------------------------------
@@ -62,6 +65,9 @@ app.include_router(stock_item_router)
 app.include_router(inventory_transaction_router)
 app.include_router(group_router)
 app.include_router(ledger_router)
+app.include_router(purchase_router)
+app.include_router(sale_router)
+app.include_router(invoice_router)
 # ------------------------------------------------------------------
 # Root Endpoint
 # ------------------------------------------------------------------

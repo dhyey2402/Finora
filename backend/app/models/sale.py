@@ -57,6 +57,9 @@ class Sale(Base, TimestampMixin):
     inventory_transactions: Mapped[list["InventoryTransaction"]] = relationship(
         "InventoryTransaction", back_populates="sale"
     )
+    items: Mapped[list["SaleItem"]] = relationship(
+        "SaleItem", back_populates="sale", cascade="all, delete-orphan"
+    )
 
     def __repr__(self) -> str:
         return f"<Sale id={self.id} number={self.sale_number!r}>"

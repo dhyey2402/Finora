@@ -65,6 +65,9 @@ class Invoice(Base, TimestampMixin):
         "Customer", back_populates="invoices"
     )
     sale: Mapped["Sale | None"] = relationship("Sale", back_populates="invoices")
+    items: Mapped[list["InvoiceItem"]] = relationship(
+        "InvoiceItem", back_populates="invoice", cascade="all, delete-orphan"
+    )
 
     def __repr__(self) -> str:
         return f"<Invoice id={self.id} number={self.invoice_number!r} status={self.status}>"
